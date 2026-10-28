@@ -34,4 +34,19 @@ public sealed class Produto
     public decimal Preco { get; }
 
     public int QuantidadeEstoque { get; private set; }
+
+    internal void BaixarEstoque(int quantidade)
+    {
+        if (quantidade <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(quantidade), "A quantidade deve ser positiva.");
+        }
+
+        if (quantidade > QuantidadeEstoque)
+        {
+            throw new InvalidOperationException($"Estoque insuficiente para o produto {Nome}.");
+        }
+
+        QuantidadeEstoque -= quantidade;
+    }
 }
