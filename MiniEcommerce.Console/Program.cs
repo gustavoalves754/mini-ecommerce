@@ -137,7 +137,7 @@ static void RemoverDoCarrinho(CarrinhoDeCompras carrinho)
 
 static void ExibirCarrinho(CarrinhoDeCompras carrinho)
 {
-    if (carrinho.Itens.Count == 0)
+    if (carrinho.EstaVazio)
     {
         System.Console.WriteLine("O carrinho está vazio.");
         return;

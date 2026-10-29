@@ -35,6 +35,11 @@ public sealed class Produto
 
     public int QuantidadeEstoque { get; private set; }
 
+    public bool PossuiEstoque(int quantidade)
+    {
+        return quantidade > 0 && quantidade <= QuantidadeEstoque;
+    }
+
     internal void BaixarEstoque(int quantidade)
     {
         if (quantidade <= 0)
@@ -42,7 +47,7 @@ public sealed class Produto
             throw new ArgumentOutOfRangeException(nameof(quantidade), "A quantidade deve ser positiva.");
         }
 
-        if (quantidade > QuantidadeEstoque)
+        if (!PossuiEstoque(quantidade))
         {
             throw new InvalidOperationException($"Estoque insuficiente para o produto {Nome}.");
         }

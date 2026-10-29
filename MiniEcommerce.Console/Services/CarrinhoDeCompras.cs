@@ -8,6 +8,8 @@ public sealed class CarrinhoDeCompras
 
     public IReadOnlyList<ItemCarrinho> Itens => _itens.AsReadOnly();
 
+    public bool EstaVazio => _itens.Count == 0;
+
     public decimal Total => _itens.Sum(item => item.Subtotal);
 
     public void AdicionarItem(Produto produto, int quantidade)
@@ -22,7 +24,7 @@ public sealed class CarrinhoDeCompras
         var itemExistente = _itens.FirstOrDefault(item => item.Produto.Id == produto.Id);
         var quantidadeNoCarrinho = itemExistente?.Quantidade ?? 0;
 
-        if (quantidadeNoCarrinho + quantidade > produto.QuantidadeEstoque)
+        if (!produto.PossuiEstoque(quantidadeNoCarrinho + quantidade))
         {
             throw new InvalidOperationException("A quantidade solicitada excede o estoque disponível.");
         }

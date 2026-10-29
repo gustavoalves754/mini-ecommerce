@@ -8,7 +8,7 @@ public sealed class PedidoService
     {
         ArgumentNullException.ThrowIfNull(carrinho);
 
-        if (carrinho.Itens.Count == 0)
+        if (carrinho.EstaVazio)
         {
             throw new InvalidOperationException("Não é possível finalizar um carrinho vazio.");
         }
@@ -37,7 +37,7 @@ public sealed class PedidoService
     {
         foreach (var item in itens)
         {
-            if (item.Quantidade > item.Produto.QuantidadeEstoque)
+            if (!item.Produto.PossuiEstoque(item.Quantidade))
             {
                 throw new InvalidOperationException(
                     $"Estoque insuficiente para o produto {item.Produto.Nome}.");
